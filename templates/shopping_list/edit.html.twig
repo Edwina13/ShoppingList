@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Modifier la liste</h1>
+
+        {{ include('shopping_list/_form.html.twig', {'button_label': 'Éditer'}) }}
+
+    </div>
+
+
+
+{% endblock %}

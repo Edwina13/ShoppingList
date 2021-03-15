@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Modification de ma catégorie</h1>
+
+        {{ include('category/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        {{ include('category/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

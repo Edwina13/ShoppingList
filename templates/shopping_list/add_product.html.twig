@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Remplir ma liste{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
+    <div class="container mt-4">
+        <h1>{{ 'Ajout des produits' }}</h1>
+        <div class="mt-4">
+            {{ form_start(form) }}
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    {{ form_row(form.product) }}
+                </div>
+                <div class="form-group col-md-1">
+                    {{ form_row(form.quantity) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class=" form-group col-md-4">
+                    {{ form_row(form.shopping_list, { 'attr':{'disabled':'disabled'} }) }}
+                </div>
+            </div>
+            {{ form_widget(form) }}
+            <button class="btn btn-success">{{ button|default('Ajouter') }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h4>{{ 'Les produits associés à cette liste de course' }}</h4>
+        <table id="tableListProducts" class="table table-striped" >
+            <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Catégorie</th>
+{#                <th>Date de création</th>#}
+{#                <th>Actions</th>#}
+            </tr>
+            </thead>
+            <tbody>
+             {% for list in lists %}
+            <tr>
+                <td>{{ list.product.name }}</td>
+                <td>{{ list.quantity }}</td>
+                <td>{{ list.product.category.name }}</td>
+{#                <td>{{ list.product.creationDate|date('d-m-Y') }}</td>#}
+                {#<td>
+                    <a href="#" class="btn btn-warning btn-xs">Éditer</a>
+                    <a href="#" class="btn btn-danger btn-xs">Supprimer</a>
+                </td>#}
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.select-multiple-product').select2({
+                placeholder: 'Selection des produits'
+            });
+
+            $('#tableListProducts').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                }
+            });
+        });
+
+
+    </script>
+{% endblock %}

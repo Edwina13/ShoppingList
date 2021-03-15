@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Affichage d'un produit</h1>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Produit</th>
+                <th>Date de création</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.creationDate? product.creationDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-warning">Éditer</a>
+        <div class="mt-2">
+            {{ include('product/_delete_form.html.twig') }}
+        </div>
+
+        <div class="mt-5" style="width: 500px;">
+            <h5>Produit présent dans les listes de courses suivantes :</h5>
+            <table class="table table-striped" id="tableShoppingList">
+                <thead>
+                <tr>
+                    <th>Liste</th>
+                    <th>Quantité</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set total = 0 %}
+                {% for list in lists %}
+                    {% set total = total + list.quantity %}
+                <tr>
+                    <td>
+                        <a href="{{ path('add_shopping_list_product', {'id' : list.shoppingList.id}) }}">{{ list.shoppingList.name }}</a>
+                    </td>
+                    <td>
+                        {{ list.quantity }}
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            <p class="text-muted">La quantité total de ce produit est de : <strong>{{ total }}</strong></p>
+        </div>
+    </div>
+
+{% endblock %}

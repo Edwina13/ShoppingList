@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit - Liste{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container mt-4">
+        <h1>Modifier les élements de la liste</h1>
+        {{ include('shopping_list_product/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+{% endblock %}

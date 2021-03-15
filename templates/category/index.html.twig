@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="container mt-4">
+        <h1>Liste des catégories</h1>
+
+        <div class="mt-4">
+            {{ include('category/_form.html.twig', {form: form, button:'Ajouter'}) }}
+        </div>
+
+        <div class="mt-4">
+            <table id="tableCategories" class="table table-striped table-bordered dt-responsive">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Catégorie</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                        <td style="width: 200px;">
+                            <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-primary">Afficher</a>
+                            <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-warning">Éditer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('#tableCategories').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                }
+            });
+        });
+    </script>
+{% endblock %}

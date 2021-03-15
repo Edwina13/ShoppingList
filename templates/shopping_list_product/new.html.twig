@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ShoppingListProduct{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container mt-4">
+        <h1>{{ 'Ajout de produit dans la liste : ' }} <strong>{{ shoppingList.name }}</strong></h1>
+
+        {{ include('shopping_list_product/_form.html.twig') }}
+    </div>
+
+
+    <div class="container mt-5">
+        <h4>{{ 'Les produits associés à cette liste de course' }}</h4>
+        <table id="tableListProducts" class="table table-striped" >
+            <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Catégorie</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for shopping_list_product in lists %}
+                <tr>
+                    <td>{{ shopping_list_product.product.name }}</td>
+                    <td>{{ shopping_list_product.quantity }}</td>
+                    <td>{{ shopping_list_product.product.category.name }}</td>
+                    <td style="width: 280px">
+                        <table>
+                            <a href="{{ path('shopping_list_product_edit', {'id': shopping_list_product.id}) }}" class="btn btn-warning">Éditer</a>
+                            {{ include('shopping_list_product/_delete_form.html.twig') }}
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('#tableListProducts').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                }
+            });
+        });
+    </script>
+{% endblock %}

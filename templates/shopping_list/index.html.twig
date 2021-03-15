@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes listes{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Mes listes de courses</h1>
+        <div class="mt-4">
+            <nav class="navbar-form d-flex justify-content-center w-100">
+                {{ include('shopping_list/_form.html.twig', {form: form, button:'Ajouter'}) }}
+            </nav>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row flex">
+            {% for shopping_list in shopping_lists %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h5><a href="{{ path('add_shopping_list_product', {'id':shopping_list.id}) }}">{{ shopping_list.name }}</a></h5>
+                                <div class="text-default">{{ shopping_list.creationDate|date("d/m/Y") }}</div>
+                                <div class="mt-2">
+                                    <a href="{{ path('shopping_list_edit', {'id': shopping_list.id}) }}" class="btn btn-sm btn-warning">Éditer</a>
+                                    {{ include('shopping_list/_delete_form.html.twig') }}                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.select-multiple-product').select2({
+                placeholder: 'Selection des produits'
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+<div class="row g-4">
+    <div class="col-md-6">
+        {{ form_row(form.name, {'attr':{'class':'form-control', 'placeholder': "--- Saisir une nouvelle catégorie ---"}}) }}
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-success mb-3">{{ button|default('Enregistrer') }}</button>
+    </div>
+</div>
+{{ form_end(form) }}
+
